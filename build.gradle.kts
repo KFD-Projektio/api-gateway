@@ -31,6 +31,10 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+    // Retry
+    implementation("org.springframework.boot:spring-boot-starter-aop:2.6.4")
+    implementation("org.springframework.retry:spring-retry:2.0.11")
+
 }
 
 dependencyManagement {
