@@ -1,4 +1,12 @@
-FROM ubuntu:latest
-LABEL authors="Misha"
+FROM eclipse-temurin:17-jdk-jammy AS builder
+WORKDIR /app
+COPY . .
+RUN ./gradlew bootJar --no-daemon
 
-ENTRYPOINT ["top", "-b"]
+FROM eclipse-temurin:17-jre-jammy AS runner
+WORKDIR /app
+
+COPY --from=builder /app/build/libs/*.jar app.jar
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
