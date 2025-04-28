@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: api-gateway
+  profiles:
+    default: dev
   cloud:
     config:
       uri: ${CONFIG_SERVER_URI:http://localhost:8888}
