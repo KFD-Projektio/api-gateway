@@ -1,4 +1,3 @@
-
 package ru.projektio.apigateway.filters
 
 import io.jsonwebtoken.Claims
@@ -10,7 +9,6 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.core.io.buffer.DataBufferUtils
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
-import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
@@ -124,15 +122,15 @@ class JwtHeaderFilter(
 
     private val publicKey: PublicKey by lazy {
         try {
-            val keyBytes = Base64.getDecoder().decode(jwtProperties.publicRsaFile)
+            val keyBytes = Base64.getDecoder().decode(jwtProperties.publicRsaFile.replace("\n", ""))
             val spec = X509EncodedKeySpec(keyBytes)
             KeyFactory.getInstance("RSA").generatePublic(spec).also {
                 log.info("Successfully initialized RSA public key")
             }
         } catch (ex: IllegalArgumentException) {
-            throw IllegalStateException("Invalid Base64 encoding for public key", ex)
+            throw IllegalStateException("Invalid Base64 encoding for public key ${ex.message}", ex)
         } catch (ex: Exception) {
-            throw IllegalStateException("Failed to initialize public key", ex)
+            throw IllegalStateException("Failed to initialize public key ${ex.message}", ex)
         }
     }
 }
