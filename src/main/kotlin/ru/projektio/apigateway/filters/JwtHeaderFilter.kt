@@ -85,11 +85,11 @@ class JwtHeaderFilter(
         exchange: ServerWebExchange,
         claims: Claims
     ): ServerWebExchange {
-        val userId = claims.get("user_id", Long::class.java)
+        val userId = claims.get("user_id", String::class.java)
         ?: throw JwtAuthenticationException("User ID not found in JWT")
 
         val request = exchange.request.mutate()
-            .header("X-User-ID", userId.toString())
+            .header("X-User-ID", userId)
             .build()
 
         return exchange.mutate().request(request).build().also {
