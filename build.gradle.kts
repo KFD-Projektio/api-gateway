@@ -31,7 +31,6 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.")
 
     // Retry
     implementation("org.springframework.boot:spring-boot-starter-aop:2.6.4")
