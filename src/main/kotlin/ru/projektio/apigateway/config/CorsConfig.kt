@@ -5,10 +5,12 @@ import org.springframework.web.reactive.config.CorsRegistry
 import org.springframework.web.reactive.config.WebFluxConfigurer
 
 @Configuration
-class CorsConfig : WebFluxConfigurer {
+class CorsConfig(
+    private val properties: CorsProperties
+) : WebFluxConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000")
+            .allowedOrigins(properties.allowedOrigins)
             .allowedMethods("*")
             .allowedHeaders("*")
             .allowCredentials(true)
